@@ -3,7 +3,7 @@ import cors from 'cors'
 
 import logger from 'helpers/logger'
 
-logger('just a testing :)')
+logger('just a testing :))))')
 
 const app = express();
 app.use(cors())
