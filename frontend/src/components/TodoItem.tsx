@@ -1,4 +1,6 @@
 import React from 'react';
+import Moment from 'react-moment';
+// import 'moment-timezone';
 
 type Props = TodoProps & {
   updateTodo: (todo: Todos) => void;
@@ -10,8 +12,22 @@ function Todo({ todo, updateTodo, deleteTodo }: Props) {
   return (
     <div className="flex justify-between items-center text-gray-900 bg-gray-100 px-2 py-1 my-2">
       <div className="flex flex-col">
-        <h1 className={checkTodo}>Name {todo.name}</h1>
-        <span className={checkTodo}>Description {todo.description}</span>
+        <h1 className={`${checkTodo} font-bold`}>Name</h1>
+        <span>{todo.name}</span>
+        {/* <span className={checkTodo}>Description {todo.description}</span> */}
+      </div>
+      <div className="flex flex-col">
+        <h1 className={`${checkTodo} font-bold`}>Created At</h1>
+        <span className={checkTodo}>
+          <Moment format="YYYY/MM/DD">{todo.createdAt}</Moment>
+        </span>
+      </div>
+      <div className="flex flex-col">
+        <h1 className={`${checkTodo} font-bold`}>Updated At</h1>
+        <span className={checkTodo}>
+          {' '}
+          <Moment format="YYYY/MM/DD">{todo.updatedAt}</Moment>
+        </span>
       </div>
       <div className="space-x-4">
         <button

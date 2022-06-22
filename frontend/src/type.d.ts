@@ -2,6 +2,8 @@ interface Todos {
   id: string;
   name: string;
   description: string;
+  createdAt?: string;
+  updatedAt?: string;
   status: boolean;
 }
 

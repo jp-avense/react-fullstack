@@ -1,7 +1,14 @@
-import { Table, Model, Column, DataType } from 'sequelize-typescript';
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  CreatedAt,
+  UpdatedAt,
+} from 'sequelize-typescript';
 
 @Table({
-  timestamps: false,
+  timestamps: true,
   tableName: 'todos',
 })
 export class Todos extends Model {
@@ -23,13 +30,19 @@ export class Todos extends Model {
   })
   status!: boolean;
 
-  // @Column({
-  //   type: DataType.DATE,
-  // })
-  // createdAt!: Date;
+  // @CreatedAt
+  // creationDate!: Date;
 
-  // @Column({
-  //   type: DataType.DATE,
-  // })
-  // updatedAt!: Date;
+  // @UpdatedAt
+  // updatedOn!: Date;
+
+  @Column({
+    type: DataType.DATE,
+  })
+  createdAt!: Date;
+
+  @Column({
+    type: DataType.DATE,
+  })
+  updatedAt!: Date;
 }
