@@ -1,32 +1,77 @@
-import React from 'react';
-import Home from 'features/Home';
-import Login from 'features/Login';
-import { Routes, Route, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import TodoItem from './components/TodoItem';
+import AddTodo from './components/AddTodo';
+import { getTodos, addTodo, updateTodo, deleteTodo } from './API';
 
 function App() {
+  const [apps, setTodos] = useState<Todos[]>([]);
+
+  const fetchTodos = () => {
+    getTodos()
+      .then(({ data: { data } }: Todos[] | any) => setTodos(data))
+      .catch((err: Error) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const handleSaveTodo = (e: React.FormEvent, formData: Todos): void => {
+    e.preventDefault();
+    addTodo(formData)
+      .then(({ status, data }) => {
+        console.log(data);
+        if (status !== 201) {
+          throw new Error('Error! Todo not saved');
+        }
+        setTodos(data.todos);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const handleUpdateTodo = (todo: Todos): void => {
+    updateTodo(todo)
+      .then(({ status, data }) => {
+        if (status !== 200) {
+          throw new Error('Error! Todo not updated');
+        }
+        setTodos(data.todos);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const handleDeleteTodo = (id: string): void => {
+    deleteTodo(id)
+      .then(({ status, data }) => {
+        console.log(data);
+        if (status !== 200) {
+          throw new Error('Error! Todo not deleted');
+        }
+        setTodos(data.todos);
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
-    <div>
-      <Routes>
-        <Route path="/">
-          <Route path="home" element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route
-            index
-            element={
-              <>
-                Hello. Click the link below:
-                <div>
-                  <Link to="home">Home</Link>
-                </div>
-                <div>
-                  <Link to="login">Login</Link>
-                </div>
-              </>
-            }
-           />
-        </Route>
-      </Routes>
-    </div>
+    <main className="App">
+      <h1 className="text-6xl font-bold">My Todos</h1>
+      <div className="bg-white px-3 py-2 mt-4 rounded-lg">
+        <div>
+          <AddTodo saveTodo={handleSaveTodo} />
+        </div>
+        <div className="bg-white w-full py-2 mb-10 w-full mt-4">
+          {apps &&
+            apps.map((todo: Todos) => (
+              <TodoItem
+                key={todo.id}
+                updateTodo={handleUpdateTodo}
+                deleteTodo={handleDeleteTodo}
+                todo={todo}
+              />
+            ))}
+        </div>
+      </div>
+    </main>
   );
 }
 
