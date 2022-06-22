@@ -4,7 +4,7 @@ import AddTodo from './components/AddTodo';
 import { getTodos, addTodo, updateTodo, deleteTodo } from './API';
 
 function App() {
-  const [apps, setTodos] = useState<Todos[]>([]);
+  const [todos, setTodos] = useState<Todos[]>([]);
 
   const fetchTodos = () => {
     getTodos()
@@ -14,13 +14,13 @@ function App() {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [todos]);
 
   const handleSaveTodo = (e: React.FormEvent, formData: Todos): void => {
     e.preventDefault();
     addTodo(formData)
       .then(({ status, data }) => {
-        console.log(data);
+        // console.log(data.todos);
         if (status !== 201) {
           throw new Error('Error! Todo not saved');
         }
@@ -43,10 +43,11 @@ function App() {
   const handleDeleteTodo = (id: string): void => {
     deleteTodo(id)
       .then(({ status, data }) => {
-        console.log(data);
+        // console.log(data);
         if (status !== 200) {
           throw new Error('Error! Todo not deleted');
         }
+        // console.log(data);
         setTodos(data.todos);
       })
       .catch(err => console.log(err));
@@ -60,8 +61,9 @@ function App() {
           <AddTodo saveTodo={handleSaveTodo} />
         </div>
         <div className="bg-white w-full py-2 mb-10 w-full mt-4">
-          {apps &&
-            apps.map((todo: Todos) => (
+          {todos &&
+            todos.length > 0 &&
+            todos.map((todo: Todos) => (
               <TodoItem
                 key={todo.id}
                 updateTodo={handleUpdateTodo}

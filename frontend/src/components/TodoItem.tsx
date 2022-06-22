@@ -17,7 +17,11 @@ function Todo({ todo, updateTodo, deleteTodo }: Props) {
         <button
           type="submit"
           onClick={() => updateTodo(todo)}
-          className="bg-green-500 px-3 py-2 rounded-md text-gray-50 font-bold hover:bg-green-600 transition duration-300"
+          className={
+            todo.status
+              ? `hide-button`
+              : 'bg-green-500 px-3 py-2 rounded-md text-gray-50 font-bold hover:bg-green-600 transition duration-300'
+          }
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +30,7 @@ function Todo({ todo, updateTodo, deleteTodo }: Props) {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            <path d="M5 13l4 4L19 7" />
           </svg>
         </button>
         <button

@@ -13,5 +13,6 @@ type ApiDataType = {
   message: string;
   status: string;
   todos: Todos[];
+  newTodo: Todos;
   todo?: Todos;
 };

@@ -88,13 +88,13 @@ body {
   border-radius: 20px;
   cursor: pointer;
   border: none;
-}
+} */
 
 .line-through {
   text-decoration: line-through;
   color: #777 !important;
 }
 
-.hide-button {
+/* .hide-button {
   display: none;
 } */

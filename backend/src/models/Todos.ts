@@ -17,9 +17,19 @@ export class Todos extends Model {
   })
   description!: string;
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+  })
+  status!: boolean;
+
   // @Column({
-  //   type: DataType.BOOLEAN,
-  //   allowNull: false,
+  //   type: DataType.DATE,
   // })
-  // status!: boolean;
+  // createdAt!: Date;
+
+  // @Column({
+  //   type: DataType.DATE,
+  // })
+  // updatedAt!: Date;
 }
